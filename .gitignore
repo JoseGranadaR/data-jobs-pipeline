@@ -1,0 +1,23 @@
+# Credenciales
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.venv/
+venv/
+dist/
+*.egg-info/
+
+# Datos crudos (puede ser grande, compartir via Drive/S3)
+data/data_jobs.csv
+
+# Logs
+pipeline.log
+
+# IDE
+.vscode/
+.idea/
+*.DS_Store

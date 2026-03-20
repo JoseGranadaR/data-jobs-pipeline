@@ -1,0 +1,14 @@
+# ── Runtime ──────────────────────────────────────────────────────
+pandas==2.2.0
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.27
+python-dotenv==1.0.1
+pytz==2024.1                 # zona horaria Colombia (America/Bogota)
+pandera==0.19.0          # validación de schema de DataFrames antes del INSERT
+
+# ── Testing ───────────────────────────────────────────────────────
+pytest==8.0.0
+pytest-cov==5.0.0
+
+# ── Linting (también usado en CI/CD) ─────────────────────────────
+flake8==7.0.0
