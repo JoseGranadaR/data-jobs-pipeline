@@ -48,8 +48,8 @@ except ImportError:
     sys.modules["pandera"] = pandera_mock
     sys.modules["pandera.errors"] = pandera_mock.errors
 
-from pipeline.ingestion import _safe_parse_list, _safe_parse_dict
-import pipeline.ingestion as _ing_module
+from pipeline.ingestion import _safe_parse_list, _safe_parse_dict  # noqa: E402
+import pipeline.ingestion as _ing_module  # noqa: E402
 
 # Patch validate_dataframe para que no ejecute el schema real en tests
 _ing_module.validate_dataframe = lambda df: df
@@ -136,5 +136,5 @@ def sample_csv_path(tmp_path_factory) -> str:
         f.write(header + "\n")
         for row in rows:
             f.write(row + "\n")
-
+            
     return str(path)
