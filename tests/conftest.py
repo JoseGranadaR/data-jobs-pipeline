@@ -24,8 +24,6 @@ sample_csv_path : str
 """
 import sys
 import types
-import tempfile
-import os
 
 import pandas as pd
 import pytest
@@ -37,8 +35,8 @@ for mod_name in ["sqlalchemy", "sqlalchemy.orm", "sqlalchemy.exc", "dotenv"]:
         sys.modules[mod_name] = types.ModuleType(mod_name)
 
 sys.modules["sqlalchemy"].create_engine = lambda *a, **kw: None
-sys.modules["sqlalchemy"].text          = lambda s: s
-sys.modules["dotenv"].load_dotenv       = lambda: None
+sys.modules["sqlalchemy"].text = lambda s: s
+sys.modules["dotenv"].load_dotenv = lambda: None
 
 # Mock de pandera: validate_dataframe devuelve el df sin modificarlo
 try:
@@ -47,7 +45,7 @@ except ImportError:
     pandera_mock = types.ModuleType("pandera")
     pandera_mock.errors = types.ModuleType("pandera.errors")
     pandera_mock.errors.SchemaErrors = Exception
-    sys.modules["pandera"]        = pandera_mock
+    sys.modules["pandera"] = pandera_mock
     sys.modules["pandera.errors"] = pandera_mock.errors
 
 from pipeline.ingestion import _safe_parse_list, _safe_parse_dict
@@ -101,7 +99,7 @@ def sample_df() -> pd.DataFrame:
     - Total skills: 3 + 3 + 3 = 9 relaciones en bridge.
     """
     df = pd.DataFrame(_SAMPLE_DATA)
-    df["job_skills_parsed"]      = df["job_skills"].apply(_safe_parse_list)
+    df["job_skills_parsed"] = df["job_skills"].apply(_safe_parse_list)
     df["job_type_skills_parsed"] = df["job_type_skills"].apply(_safe_parse_dict)
     return df
 

@@ -53,7 +53,7 @@ import argparse
 import logging
 import time
 
-from pipeline.config import CSV_PATH, LOG_LEVEL, TZ, now_bogota, validate_config
+from pipeline.config import CSV_PATH, LOG_LEVEL, now_bogota, validate_config
 from pipeline.ingestion import load_to_raw, read_csv
 from pipeline.transform import run_3nf_pipeline
 
@@ -92,7 +92,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     """Orquesta las dos fases del pipeline de principio a fin."""
-    args  = parse_args()
+    args = parse_args()
     start = time.time()
     inicio = now_bogota().strftime("%Y-%m-%d %H:%M:%S %Z")
 

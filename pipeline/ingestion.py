@@ -367,7 +367,7 @@ def read_csv(csv_path: str = CSV_PATH) -> tuple:
     df = validate_dataframe(df)
 
     # Convertir habilidades de texto a listas y diccionarios
-    df["job_skills_parsed"]      = df["job_skills"].apply(_safe_parse_list)
+    df["job_skills_parsed"] = df["job_skills"].apply(_safe_parse_list)
     df["job_type_skills_parsed"] = df["job_type_skills"].apply(_safe_parse_dict)
 
     logger.info(
@@ -464,7 +464,7 @@ def load_to_raw(df: pd.DataFrame, bad_records: list) -> None:
         "company_name", "job_skills", "job_type_skills",
     ]
     df_raw = df[[c for c in cols if c in df.columns]].copy()
-    df_raw["job_skills"]      = df_raw["job_skills"].astype(str)
+    df_raw["job_skills"] = df_raw["job_skills"].astype(str)
     df_raw["job_type_skills"] = df_raw["job_type_skills"].astype(str)
     bulk_copy(df_raw, "raw_jobs", engine)
 

@@ -300,10 +300,10 @@ def build_fact_jobs(
     fact = df.copy().reset_index(drop=True)
     fact["_csv_row"] = range(len(fact))
 
-    company_map  = dict(zip(dim_companies["company_name"], dim_companies["company_id"]))
+    company_map = dict(zip(dim_companies["company_name"], dim_companies["company_id"]))
     location_map = dict(zip(dim_locations["raw_location"], dim_locations["location_id"]))
 
-    fact["company_id"]  = fact["company_name"].map(company_map)
+    fact["company_id"] = fact["company_name"].map(company_map)
     fact["location_id"] = fact["job_location"].map(location_map)
 
     # Convertir a entero nullable (Int64) para evitar que los NaN
@@ -459,7 +459,7 @@ def run_3nf_pipeline(df: pd.DataFrame) -> dict:
     logger.info("--- Etapa 1: deduplicar ---")
     dim_companies = build_dim_companies(df)
     dim_locations = build_dim_locations(df)
-    dim_skills    = build_dim_skills(df)
+    dim_skills = build_dim_skills(df)
 
     logger.info("--- Etapa 2: asignar identificadores ---")
     fact_jobs = build_fact_jobs(df, dim_companies, dim_locations)
