@@ -136,5 +136,5 @@ def sample_csv_path(tmp_path_factory) -> str:
         f.write(header + "\n")
         for row in rows:
             f.write(row + "\n")
-            
+
     return str(path)
