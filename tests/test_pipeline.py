@@ -500,7 +500,7 @@ class TestRobustez:
 
     def test_validate_input_df_vacio_lanza_error(self):
         """run_3nf_pipeline debe fallar con error descriptivo si el df está vacío."""
-        with pytest.raises(ValueError, match="DataFrame de entrada está vacío"):
+        with pytest.raises(ValueError, match="No hay datos para transformar"):
             _validate_input_df(pd.DataFrame())
 
     def test_validate_input_df_none_lanza_error(self):
@@ -528,9 +528,10 @@ class TestRobustez:
         dc = build_dim_companies(df_null)
         dl = build_dim_locations(df_null)
         fj = build_fact_jobs(df_null, dc, dl)
-        assert fj.loc[0, "company_id"] != fj.loc[0, "company_id"]  # NaN check
+        import pandas as pd
+        assert pd.isna(fj.loc[0, "company_id"])
 
     def test_run_3nf_pipeline_df_vacio_lanza_error(self):
         """run_3nf_pipeline debe lanzar ValueError antes de conectar a la BD."""
-        with pytest.raises(ValueError, match="DataFrame de entrada está vacío"):
+        with pytest.raises(ValueError, match="No hay datos para transformar"):
             run_3nf_pipeline(pd.DataFrame())
