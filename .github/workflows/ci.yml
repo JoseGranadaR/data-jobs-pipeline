@@ -1,0 +1,49 @@
+# ci.yml
+# ======
+# Pipeline de CI/CD con GitHub Actions.
+#
+# Se ejecuta en cada push a main/develop y en cada pull request a main.
+#
+# Pasos:
+#   1. Checkout del código
+#   2. Configurar Python 3.11 con caché de pip
+#   3. Instalar todas las dependencias (requirements.txt incluye flake8, pandera, pytest-cov)
+#   4. Lint con flake8 (max 110 chars por línea)
+#   5. Tests unitarios + reporte de cobertura
+#   6. Verificar que los archivos SQL requeridos existen
+
+name: CI - Lint y Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Lint con flake8
+        run: flake8 pipeline/ tests/ main.py --max-line-length=110
+
+      - name: Ejecutar tests con cobertura
+        run: pytest tests/ -v --cov=pipeline --cov-report=term-missing
+
+      - name: Verificar archivos SQL
+        run: |
+          test -f sql/schema.sql
+          test -f sql/queries_validacion.sql
